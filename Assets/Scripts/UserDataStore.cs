@@ -148,4 +148,51 @@ public static class UserDataStore
         PlayerPrefs.SetInt(FoodUnlockPrefix + foodName, unlocked ? 1 : 0);
         PlayerPrefs.Save();
     }
+
+    // ---------------------------------------------------------------
+    // PLAYER PROFILE
+    // ---------------------------------------------------------------
+    private const string PlayerNameKey = "User_PlayerName";
+    private const string PlayerAgeRangeKey = "User_AgeRange";
+
+    public static string GetPlayerName(string defaultName = "Player")
+    {
+        return PlayerPrefs.GetString(PlayerNameKey, defaultName);
+    }
+
+    public static void SetPlayerName(string name)
+    {
+        PlayerPrefs.SetString(PlayerNameKey, name);
+        PlayerPrefs.Save();
+    }
+
+    /// <summary>
+    /// Age range index: 0 = "8-9", 1 = "10-11", 2 = "12+"
+    /// </summary>
+    public static int GetAgeRangeIndex(int defaultIndex = 0)
+    {
+        return PlayerPrefs.GetInt(PlayerAgeRangeKey, defaultIndex);
+    }
+
+    public static void SetAgeRangeIndex(int index)
+    {
+        PlayerPrefs.SetInt(PlayerAgeRangeKey, index);
+        PlayerPrefs.Save();
+    }
+
+    // ---------------------------------------------------------------
+    // BACKGROUND CUSTOMIZATION
+    // ---------------------------------------------------------------
+    private const string SelectedBackgroundKey = "Display_SelectedBackground";
+
+    public static int GetSelectedBackground(int defaultIndex = 0)
+    {
+        return PlayerPrefs.GetInt(SelectedBackgroundKey, defaultIndex);
+    }
+
+    public static void SetSelectedBackground(int index)
+    {
+        PlayerPrefs.SetInt(SelectedBackgroundKey, index);
+        PlayerPrefs.Save();
+    }
 }

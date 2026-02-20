@@ -26,8 +26,12 @@ public class MainMenuManager : MonoBehaviour
 
     public void OpenAccount()
     {
-        Debug.Log("Account screen - To be implemented");
-        // TODO: Open account screen
+        SceneManager.LoadScene("Account");
+    }
+
+    public void OpenBackgroundSelect()
+    {
+        SceneManager.LoadScene("BackgroundSelect");
     }
 
     public void OpenTrophyCase()
