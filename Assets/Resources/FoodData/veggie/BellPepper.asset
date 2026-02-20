@@ -18,10 +18,10 @@ MonoBehaviour:
   isUnlocked: 0
   requiredScore: 0
   coinCost: 10
-  season: 
-  foodGroup: 
-  funFact: 
-  calories: 0
-  origin: 
-  nutrients: 
+  season: Summer
+  foodGroup: Vegetable
+  funFact: Bell peppers have MORE Vitamin C than oranges! Red peppers are just ripe green ones - they change color as they grow!
+  calories: 31
+  origin: Central and South America
+  nutrients: Vitamin C, Vitamin A, Vitamin B6
   foodPrefab: {fileID: 0}

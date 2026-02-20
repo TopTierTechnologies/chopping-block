@@ -18,10 +18,10 @@ MonoBehaviour:
   isUnlocked: 0
   requiredScore: 0
   coinCost: 15
-  season: 
-  foodGroup: 
-  funFact: 
-  calories: 0
-  origin: 
-  nutrients: 
+  season: Summer
+  foodGroup: Fruit
+  funFact: It takes 3-5 years for a cherry tree to grow its first cherries! Eating cherries can even help you sleep better at night.
+  calories: 50
+  origin: Turkey and Asia
+  nutrients: Vitamin C, Antioxidants, Fiber
   foodPrefab: {fileID: 0}

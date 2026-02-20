@@ -18,10 +18,10 @@ MonoBehaviour:
   isUnlocked: 0
   requiredScore: 250
   coinCost: 0
-  season: 
-  foodGroup: 
-  funFact: 
-  calories: 0
-  origin: 
-  nutrients: 
+  season: Summer
+  foodGroup: Vegetable
+  funFact: Cucumbers are 96% water, making them a perfect snack on a hot day! They can actually help cool your whole body down.
+  calories: 16
+  origin: India
+  nutrients: Vitamin K, Potassium, Water
   foodPrefab: {fileID: 0}

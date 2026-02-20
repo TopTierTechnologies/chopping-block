@@ -10,6 +10,7 @@ public class TrophyCaseManager : MonoBehaviour
     [SerializeField] private Transform foodGridPanel;
     [SerializeField] private GameObject foodItemCardPrefab;
     [SerializeField] private GameObject foodDetailsPopup;
+    [SerializeField] private Text notEnoughCoinsText;
     
     [Header("Details Popup")]
     [SerializeField] private Image detailsFoodIcon;
@@ -179,7 +180,7 @@ public class TrophyCaseManager : MonoBehaviour
     else
     {
         Debug.Log($"Failed to unlock {food.foodName} - not enough coins!");
-        // TODO: Show "Not enough coins" message
+        ShowNotEnoughCoins();
     }
 }
     
@@ -252,6 +253,25 @@ public class TrophyCaseManager : MonoBehaviour
         }
     }
     
+    void ShowNotEnoughCoins()
+    {
+        if (notEnoughCoinsText != null)
+        {
+            notEnoughCoinsText.text = "Not enough coins!";
+            notEnoughCoinsText.gameObject.SetActive(true);
+            StartCoroutine(HideNotEnoughCoins());
+        }
+    }
+
+    System.Collections.IEnumerator HideNotEnoughCoins()
+    {
+        yield return new WaitForSeconds(2f);
+        if (notEnoughCoinsText != null)
+        {
+            notEnoughCoinsText.gameObject.SetActive(false);
+        }
+    }
+
     public void GoBack()
     {
         SceneManager.LoadScene("MainMenu");

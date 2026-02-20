@@ -18,10 +18,10 @@ MonoBehaviour:
   isUnlocked: 0
   requiredScore: 0
   coinCost: 25
-  season: 
-  foodGroup: 
-  funFact: 
-  calories: 0
-  origin: 
-  nutrients: 
+  season: Fall
+  foodGroup: Vegetable
+  funFact: Carrots were originally purple! Orange carrots were first grown in the Netherlands to honor their royal family.
+  calories: 25
+  origin: Afghanistan
+  nutrients: Beta-Carotene, Vitamin A, Fiber
   foodPrefab: {fileID: 0}

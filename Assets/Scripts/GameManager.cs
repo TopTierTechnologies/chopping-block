@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -123,8 +124,20 @@ public class GameManager : MonoBehaviour
     int coinsEarned = score / 10;
     MainMenuManager.AddCoins(coinsEarned);
 
+    // Save score and high score for GameOver screen
+    PlayerPrefs.SetInt("LastScore", score);
+    int highScore = PlayerPrefs.GetInt("HighScore", 0);
+    if (score > highScore)
+    {
+        PlayerPrefs.SetInt("HighScore", score);
+        Debug.Log("New High Score: " + score);
+    }
+    PlayerPrefs.Save();
+
     Debug.Log("Game Over! Final Score: " + score + " | Coins Earned: " + coinsEarned);
-    // TODO: Show game over screen with coins earned
+
+    // Load game over screen
+    SceneManager.LoadScene("GameOver");
 }
 
     public bool IsPlaying()

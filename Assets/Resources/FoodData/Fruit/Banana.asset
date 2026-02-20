@@ -20,8 +20,8 @@ MonoBehaviour:
   coinCost: 0
   season: Summer
   foodGroup: Fruit
-  funFact: 
-  calories: 0
-  origin: 
-  nutrients: 
+  funFact: Bananas give you a quick energy boost before playing sports! Monkeys love them, but humans eat 100 billion bananas every year!
+  calories: 105
+  origin: Papua New Guinea
+  nutrients: Potassium, Vitamin B6, Vitamin C
   foodPrefab: {fileID: 0}
