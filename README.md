@@ -1,189 +1,204 @@
 # The Chopping Block
 
-A kids' educational mobile game about healthy eating, built with Unity 6.
+An interactive educational mobile game designed to teach children about healthy eating through gameplay.
 
-**Developer:** TopTierTechnologies / 404-Found
-**Platform:** Android (iOS coming soon)
-**Engine:** Unity 6 (6000.3.6f1) with Universal Render Pipeline (URP)
-**Package ID:** `com.404found.choppingblock`
-
----
-
-## About the Game
-
-The Chopping Block teaches kids about healthy eating through interactive gameplay. Players tap falling food items to learn about fruits and vegetables — what season they grow in, their nutritional value, where they come from, and fun facts. The game rewards curiosity and healthy food knowledge with coins, trophies, and unlockables.
-
-**Target Audience:** Kids (PEGI 3 / Everyone)
-**Core Loop:** Tap food → Learn fact → Earn coins → Unlock more food
+**Developer:** 404 Found — Florida A&M University, Group #2
+**Platform:** Android (Google Play)
+**Engine:** Unity 6 (6000.3.6f1), Universal Render Pipeline
+**Status:** Alpha — Beta release in progress
+**Total Project Budget:** $45
 
 ---
 
-## Getting Started
+## Problem Statement
 
-### Prerequisites
+Childhood nutrition habits are in decline. According to the CDC and NCBI:
 
-- [Unity Hub](https://unity.com/download)
-- Unity 6 (6000.3.6f1) — install via Unity Hub
-- Android Build Support module (for Android builds)
+- Only 23% of children eat fruits and vegetables daily
+- Nearly 40% of daily caloric intake comes from nutritionally empty foods
+- Poor early eating habits correlate with obesity, cognitive delays, and weakened immune function
 
-### Setup
-
-1. Clone the repo:
-   ```bash
-   git clone https://github.com/TopTierTechnologies/chopping-block.git
-   ```
-
-2. Open Unity Hub → **Add** → browse to the cloned folder
-
-3. Open the project in Unity 6 (6000.3.6f1)
-   - First open will take a few minutes — Unity rebuilds the `Library/` folder automatically
-
-4. Open the **MainMenu** scene to start:
-   `Assets/Scenes/MainMenu.unity`
-
-5. Press **Play** to run in the editor
+Existing educational tools are passive — textbooks, posters, and static apps that fail to engage children in the age group most influenced by interactive media.
 
 ---
 
-## Project Structure
+## Our Solution
 
-```
-Assets/
-├── Audio/
-│   ├── Music/          # Background music (MenuMusic, GameplayMusic)
-│   └── SFX/            # Sound effects (Tap, Unlock, GameOver, ButtonClick)
-├── Prefabs/            # FoodItem, FoodItemCard, Apple
-├── Resources/
-│   └── FoodData/       # ScriptableObjects for each food (Fruit/, veggie/)
-├── Scenes/             # MainMenu, Gameplay, Classic, GameOver, Settings, TrophyCase
-├── Scripts/
-│   ├── AudioManager.cs       # Audio singleton - manages all music and SFX
-│   ├── FoodData.cs           # ScriptableObject definition for food items
-│   ├── FoodItem.cs           # Food tap interaction logic
-│   ├── FoodManager.cs        # Loads and manages food data
-│   ├── FoodSpawner.cs        # Spawns food items during gameplay
-│   ├── GameManager.cs        # Core game loop, lives, scoring
-│   ├── MainMenuManager.cs    # Main menu UI and navigation
-│   ├── TapDetector.cs        # Input system tap detection
-│   ├── ThrophyCaseManager.cs # Trophy display logic
-│   ├── UnlockBannerManager.cs# Unlock celebration banner
-│   └── Editor/
-│       └── AudioManagerSetup.cs # Editor tool: Tools > Setup AudioManager
-├── Sprites/            # UI sprites, food sprites, backgrounds, logo
-└── Settings/           # URP renderer and pipeline assets
-ProjectSettings/        # Unity project config (DO NOT delete)
-```
+The Chopping Block reframes nutrition education as an active, rewarding experience. Players tap falling fruits and vegetables to score points, unlock new foods, and collect educational facts about each item. The game does not teach at children — it lets them discover healthy foods through play.
+
+**Core educational loop:**
+1. Tap a food item during gameplay
+2. Earn points and coins
+3. Unlock new foods with coins or score milestones
+4. View the food's details in the Trophy Case — season, food group, origin, fun fact, nutrients, and calories
+
+Every food unlock is an opportunity to learn. The Trophy Case functions as a growing collection of knowledge the player has earned through gameplay.
 
 ---
 
-## Coding Standards
+## Game Modes
 
-All scripts follow the same singleton pattern:
-
-```csharp
-public static ClassName Instance;
-
-void Awake()
-{
-    if (Instance == null)
-    {
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
-    else
-    {
-        Destroy(gameObject);
-        return;
-    }
-}
-```
-
-- **Persistence:** `PlayerPrefs` for coins (`"UserCoins"`), food unlocks (`"Food_Unlocked_"` prefix), audio (`"Audio_"` prefix)
-- **Input:** Unity New Input System (`InputSystem_Actions.inputactions`)
-- **Null safety:** Always call `AudioManager.Instance?.Method()` — game runs silently if AudioManager is absent
-- **Headers:** Use `[Header("Section Name")]` to group inspector fields
-- **SerializeField:** Use instead of public for inspector-only fields
+| Mode | Status | Description |
+|---|---|---|
+| Classic | Functional | Tap falling foods, avoid missing them. 3 lives, score-based progression. |
+| Countdown | Planned | 60-second time attack for highest score. |
+| Quiz | Planned | Answer nutrition questions about seasonal foods. |
 
 ---
 
-## Audio
+## Target Audience
 
-### Setup
-The AudioManager GameObject lives in the **MainMenu** scene and persists across all scenes via `DontDestroyOnLoad`. All audio clips are assigned in the Inspector.
+**Primary:** Children ages 8-12 (grades 3-7)
+**Secondary:** Parents, educators, and school health professionals
 
-To re-run setup: **Tools > Setup AudioManager** in the Unity menu.
+Content rating: PEGI 3 / Everyone. No violence, no mature content, no real-money transactions.
 
-### Audio Credits
+---
+
+## Features (Beta Scope)
+
+- Classic gameplay with lives, scoring, and food spawning
+- Six unlockable foods with complete educational data (season, nutrients, calories, origin, fun facts)
+- Coin economy — earned through gameplay, spent to unlock foods
+- Trophy Case — visual collection showing all foods, locked and unlocked, with educational detail view
+- Audio system — background music and sound effects, kid-friendly and upbeat, with volume and mute controls
+- Settings screen — volume sliders, graphics quality, audio attribution
+- Mode Selection screen — Classic accessible, future modes shown as coming soon
+- Game Over screen — displays final score, personal best, and coins earned
+- Persistent progress — all unlocks, coins, and settings saved locally across sessions
+- Git version control with full project history on GitHub
+
+---
+
+## Technical Architecture
+
+**Engine:** Unity 6 (6000.3.6f1)
+**Language:** C#
+**Rendering:** Universal Render Pipeline (URP)
+**Input:** Unity New Input System
+**Persistence:** PlayerPrefs (local), Unity Gaming Services planned for cloud sync
+**Backend planned:** Firebase (authentication, cloud save) — deferred to post-beta
+
+**Core Scripts:**
+
+| Script | Purpose |
+|---|---|
+| GameManager.cs | Game loop, scoring, lives, high score tracking |
+| FoodManager.cs | Food database, unlock state, score-based unlock checks |
+| FoodSpawner.cs | Physics-based food spawning with randomized forces |
+| FoodItem.cs | Individual food tap detection and interaction |
+| TapDetector.cs | Unity Input System touch and mouse detection |
+| AudioManager.cs | Singleton audio controller, music and SFX, volume persistence |
+| MainMenuManager.cs | Navigation, coin display, sound toggle |
+| TrophyCaseManager.cs | Food collection grid, details popup, coin-based unlock UI |
+| UnlockBannerManager.cs | Queued unlock notification banners during gameplay |
+| GameOverManager.cs | Score display and navigation on game over |
+| ModeSelectManager.cs | Mode selection with coming-soon handling |
+| SettingsManager.cs | Volume sliders, graphics quality, attribution display |
+
+**Design patterns used:** Singleton, ScriptableObject data model, Coroutines, PlayerPrefs persistence, Unity Event System
+
+---
+
+## Food Database (Current)
+
+All foods include: name, sprite, points value, season, food group, fun fact, calories, origin, and nutrients.
+
+| Food | Group | Season | Unlock Method |
+|---|---|---|---|
+| Apple | Fruit | Fall | Default (unlocked) |
+| Banana | Fruit | Summer | Score: 100 points |
+| Cherry | Fruit | Summer | Cost: 15 coins |
+| Bell Pepper | Vegetable | Summer | Cost: 10 coins |
+| Carrot | Vegetable | Fall | Cost: 25 coins |
+| Cucumber | Vegetable | Summer | Score: 250 points |
+
+---
+
+## Compliance
+
+| Regulation | How We Address It |
+|---|---|
+| COPPA (15 U.S.C. 6501-6506) | No personal data collected from under-13. Account features use local storage only. No third-party data sharing. |
+| Florida Digital Bill of Rights | No precise geolocation collected. No behavioral advertising. No dark patterns. |
+| Florida Gaming Laws (Ch. 849) | All in-game currency is virtual and non-transferable. No real-money purchases. No loot boxes. |
+| FDUTPA | All features and pricing clearly disclosed. No deceptive design. |
+
+---
+
+## Audio Credits
 
 **Music (CC-BY — attribution required):**
-- "Wallpaper" by Kevin MacLeod (incompetech.com) — Main Menu
-- "Anachronist" by Kevin MacLeod (incompetech.com) — Gameplay
-- Licensed under Creative Commons Attribution 4.0: http://creativecommons.org/licenses/by/4.0/
+- "Wallpaper" by Kevin MacLeod — Main Menu
+- "Anachronist" by Kevin MacLeod — Gameplay
+- Licensed under Creative Commons Attribution 4.0: creativecommons.org/licenses/by/4.0/
+- Source: incompetech.com
 
 **Sound Effects (CC0 — no attribution required):**
-- TapSound, UnlockSound, ButtonClick — Kenney Interface Sounds (kenney.nl)
-
-**Game Over Sound:**
-- freesound_community-negative_beeps (freesound.org)
-
-> **Important:** Kevin MacLeod attribution must appear in the app's credits/settings screen before release.
+- Interface sounds from Kenney.nl
 
 ---
 
-## Android Build
+## Project Team — 404 Found
 
-See `ANDROID_BUILD_CONFIG.md` for full Android build checklist.
+| Name | Role | Concentration |
+|---|---|---|
+| Joshua Omorodion | Team Lead / UX Research | Cybersecurity and Data Mining |
+| Kendall Hill | Co-Lead / Quality Assurance | Cybersecurity and Data Mining |
+| Nigel Buggs | UX Designer / Programmer | Cybersecurity and Data Mining |
+| Mike Johnson | Business Analyst / QA | Health Informatics and Data Mining |
 
-**Quick reference:**
-- Company: 404-Found
-- Package: `com.404found.choppingblock`
-- Min SDK: Android 7.0 (API 24)
-- Target SDK: Android 14 (API 34)
-- Architecture: ARM64
+All members are senior IT students at Florida A&M University.
 
 ---
 
-## Git Workflow
+## Budget
 
-```bash
-# Pull latest before starting work
-git pull
+| Item | Cost |
+|---|---|
+| Unity (game engine) | $0 |
+| Visual Studio (IDE) | $0 |
+| Firebase (backend) | $0 (free tier) |
+| Google Play Console (one-time) | $25 |
+| Audio assets | $0 (CC0 / CC-BY) |
+| Food art assets | $20 |
+| **Total** | **$45** |
 
-# After making changes
-git add .
-git commit -m "brief description of what you changed"
-git push
+---
+
+## Development Timeline
+
+| Milestone | Date | Status |
+|---|---|---|
+| Project kickoff | Fall 2025 | Complete |
+| Core gameplay (Alpha) | January 2026 | Complete |
+| Audio system | February 2026 | Complete |
+| Food data and unlock system | February 2026 | Complete |
+| Beta build | February 2026 | In progress |
+| Google Play submission | Spring 2026 | Planned |
+| iOS expansion | Post-launch | Planned |
+
+---
+
+## Repository
+
+Version controlled with Git. Full history available at:
+**github.com/TopTierTechnologies/chopping-block**
+
+To set up locally:
 ```
-
-**Branch strategy (when team grows):**
-- `master` — stable, always playable
-- `feature/your-feature` — new work, merge via Pull Request
-
----
-
-## Roadmap
-
-### Beta (current focus)
-- [x] Core tap gameplay
-- [x] Food ScriptableObject data system
-- [x] Coin and unlock system
-- [x] Trophy Case
-- [x] Audio system (music + SFX)
-- [x] Git version control + GitHub
-- [ ] Settings scene (volume sliders wired to AudioManager)
-- [ ] Game Over screen UI
-- [ ] Kevin MacLeod attribution screen
-- [ ] Android build + Google Play listing
-
-### Post-Beta
-- [ ] Unity Gaming Services (cloud save, analytics)
-- [ ] iOS build + App Store
-- [ ] More food items and categories
-- [ ] Seasonal content
-- [ ] Multiplayer / social features
+git clone https://github.com/TopTierTechnologies/chopping-block.git
+```
+Open in Unity Hub with Unity 6 (6000.3.6f1). Unity will rebuild the Library folder on first open.
 
 ---
 
-## License
+## Roadmap (Post-Beta)
 
-Proprietary — All rights reserved. TopTierTechnologies / 404-Found © 2025
+- Countdown and Quiz game modes
+- Firebase authentication and cloud save
+- Expanded food database (20+ items)
+- Recipe book feature
+- iOS release
+- Educator dashboard for classroom use
+- Seasonal content updates
