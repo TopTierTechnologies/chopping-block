@@ -9,8 +9,6 @@ public class ScreenBrightnessOverlay : MonoBehaviour
 
     private Image overlayImage;
 
-    private const string BRIGHTNESS_KEY = "Display_Brightness";
-
     void Awake()
     {
         if (Instance != null)
@@ -50,14 +48,13 @@ public class ScreenBrightnessOverlay : MonoBehaviour
 
     void LoadBrightness()
     {
-        brightness = PlayerPrefs.GetFloat(BRIGHTNESS_KEY, 1f);
+        brightness = UserDataStore.GetBrightness(1f);
         brightness = Mathf.Clamp01(brightness);
     }
 
     void SaveBrightness()
     {
-        PlayerPrefs.SetFloat(BRIGHTNESS_KEY, brightness);
-        PlayerPrefs.Save();
+        UserDataStore.SetBrightness(brightness);
     }
 
     void ApplyBrightness()

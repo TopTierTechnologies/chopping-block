@@ -63,27 +63,17 @@ public class MainMenuManager : MonoBehaviour
     void LoadUserData()
     {
         // Load coins from PlayerPrefs (saved data)
-        if (PlayerPrefs.HasKey("UserCoins"))
-        {
-            userCoins = PlayerPrefs.GetInt("UserCoins");
-        }
-        else
-        {
-            userCoins = 25; // Starting coins
-            PlayerPrefs.SetInt("UserCoins", userCoins);
-        }
+        userCoins = UserDataStore.GetCoins(25);
+        UserDataStore.SetCoins(userCoins);
     }
 
     public static void AddCoins(int amount)
     {
-        int currentCoins = PlayerPrefs.GetInt("UserCoins", 0);
-        currentCoins += amount;
-        PlayerPrefs.SetInt("UserCoins", currentCoins);
-        PlayerPrefs.Save();
+        UserDataStore.AddCoins(amount);
     }
 
     public static int GetCoins()
     {
-        return PlayerPrefs.GetInt("UserCoins", 25);
+        return UserDataStore.GetCoins(25);
     }
 }

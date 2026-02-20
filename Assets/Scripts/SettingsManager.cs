@@ -52,8 +52,10 @@ public class SettingsManager : MonoBehaviour
 
         if (graphicsDropdown != null)
         {
-            graphicsDropdown.value = QualitySettings.GetQualityLevel();
+            int savedGraphicsIndex = UserDataStore.GetGraphicsQualityIndex(0);
+            graphicsDropdown.value = savedGraphicsIndex;
             graphicsDropdown.onValueChanged.AddListener(OnGraphicsChanged);
+            ApplyGraphicsIndex(savedGraphicsIndex);
         }
     }
 
@@ -76,8 +78,14 @@ public class SettingsManager : MonoBehaviour
     public void OnGraphicsChanged(int index)
     {
         // 0 = Standard, 1 = Low Performance
-        QualitySettings.SetQualityLevel(index == 0 ? QualitySettings.names.Length - 1 : 0);
+        UserDataStore.SetGraphicsQualityIndex(index);
+        ApplyGraphicsIndex(index);
         Debug.Log("Graphics quality set to: " + (index == 0 ? "Standard" : "Low Performance"));
+    }
+
+    void ApplyGraphicsIndex(int index)
+    {
+        QualitySettings.SetQualityLevel(index == 0 ? QualitySettings.names.Length - 1 : 0);
     }
 
     void UpdateMuteButtonText()

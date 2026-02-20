@@ -19,13 +19,9 @@ public class AudioManager : MonoBehaviour
     public AudioClip buttonClickSound;
 
     [Header("Volume Settings")]
-    [SerializeField] private float musicVolume = 0.6f;
-    [SerializeField] private float sfxVolume = 0.8f;
+    [SerializeField] private float musicVolume = 0.4f;
+    [SerializeField] private float sfxVolume = 0.6f;
     [SerializeField] private bool isMuted = false;
-
-    private const string MUSIC_VOLUME_KEY = "Audio_MusicVolume";
-    private const string SFX_VOLUME_KEY = "Audio_SFXVolume";
-    private const string MUTED_KEY = "Audio_Muted";
 
     void Awake()
     {
@@ -109,17 +105,16 @@ public class AudioManager : MonoBehaviour
     {
         isMuted = !isMuted;
         AudioListener.volume = isMuted ? 0f : 1f;
-        PlayerPrefs.SetInt(MUTED_KEY, isMuted ? 1 : 0);
-        PlayerPrefs.Save();
+        UserDataStore.SetMuted(isMuted);
         Debug.Log($"Audio muted: {isMuted}");
     }
 
     void LoadVolumeSettings()
     {
         // Load volume settings from PlayerPrefs with defaults
-        musicVolume = PlayerPrefs.GetFloat(MUSIC_VOLUME_KEY, 0.6f);
-        sfxVolume = PlayerPrefs.GetFloat(SFX_VOLUME_KEY, 0.8f);
-        isMuted = PlayerPrefs.GetInt(MUTED_KEY, 0) == 1;
+        musicVolume = UserDataStore.GetMusicVolume(0.4f);
+        sfxVolume = UserDataStore.GetSfxVolume(0.6f);
+        isMuted = UserDataStore.GetMuted();
 
         // Apply settings
         if (musicSource != null)
@@ -133,9 +128,8 @@ public class AudioManager : MonoBehaviour
 
     void SaveVolumeSettings()
     {
-        PlayerPrefs.SetFloat(MUSIC_VOLUME_KEY, musicVolume);
-        PlayerPrefs.SetFloat(SFX_VOLUME_KEY, sfxVolume);
-        PlayerPrefs.Save();
+        UserDataStore.SetMusicVolume(musicVolume);
+        UserDataStore.SetSfxVolume(sfxVolume);
         Debug.Log("Audio settings saved");
     }
 

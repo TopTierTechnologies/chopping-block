@@ -9,9 +9,6 @@ public class GameOverManager : MonoBehaviour
     [SerializeField] private Text highScoreText;
     [SerializeField] private Text coinsEarnedText;
 
-    private const string LAST_SCORE_KEY = "LastScore";
-    private const string HIGH_SCORE_KEY = "HighScore";
-
     void Start()
     {
         LoadAndDisplayScores();
@@ -20,8 +17,8 @@ public class GameOverManager : MonoBehaviour
 
     void LoadAndDisplayScores()
     {
-        int lastScore = PlayerPrefs.GetInt(LAST_SCORE_KEY, 0);
-        int highScore = PlayerPrefs.GetInt(HIGH_SCORE_KEY, 0);
+        int lastScore = UserDataStore.GetLastScore();
+        int highScore = UserDataStore.GetHighScore();
         int coinsEarned = lastScore / 10;
 
         if (finalScoreText != null)
@@ -52,8 +49,7 @@ public class GameOverManager : MonoBehaviour
     {
         AudioManager.Instance?.PlaySFX(AudioManager.Instance.buttonClickSound);
         // Reset score tracking for fresh start
-        PlayerPrefs.SetInt(LAST_SCORE_KEY, 0);
-        PlayerPrefs.Save();
+        UserDataStore.SetLastScore(0);
         SceneManager.LoadScene("Gameplay");
     }
 

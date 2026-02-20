@@ -125,14 +125,11 @@ public class GameManager : MonoBehaviour
     MainMenuManager.AddCoins(coinsEarned);
 
     // Save score and high score for GameOver screen
-    PlayerPrefs.SetInt("LastScore", score);
-    int highScore = PlayerPrefs.GetInt("HighScore", 0);
-    if (score > highScore)
+    UserDataStore.SetLastScore(score);
+    if (UserDataStore.TrySetHighScore(score))
     {
-        PlayerPrefs.SetInt("HighScore", score);
         Debug.Log("New High Score: " + score);
     }
-    PlayerPrefs.Save();
 
     Debug.Log("Game Over! Final Score: " + score + " | Coins Earned: " + coinsEarned);
 

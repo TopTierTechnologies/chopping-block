@@ -9,8 +9,6 @@ public class FoodManager : MonoBehaviour
     [Header("Food Database")]
     public List<FoodData> allFoods = new List<FoodData>();
     
-    private const string UNLOCK_PREFIX = "Food_Unlocked_";
-    
     void Awake()
     {
         if (Instance == null)
@@ -41,7 +39,7 @@ public class FoodManager : MonoBehaviour
         foreach (FoodData food in allFoods)
         {
             // Load unlock state from PlayerPrefs
-            food.isUnlocked = PlayerPrefs.GetInt(UNLOCK_PREFIX + food.foodName, food.isUnlocked ? 1 : 0) == 1;
+            food.isUnlocked = UserDataStore.GetFoodUnlocked(food.foodName, food.isUnlocked);
         }
     }
     
@@ -50,8 +48,7 @@ public class FoodManager : MonoBehaviour
         if (food.isUnlocked) return;
         
         food.isUnlocked = true;
-        PlayerPrefs.SetInt(UNLOCK_PREFIX + food.foodName, 1);
-        PlayerPrefs.Save();
+        UserDataStore.SetFoodUnlocked(food.foodName, true);
         
         Debug.Log($"Unlocked: {food.foodName}");
         
@@ -63,14 +60,8 @@ public class FoodManager : MonoBehaviour
     {
         if (food.isUnlocked) return false;
         
-        int currentCoins = MainMenuManager.GetCoins();
-        
-        if (currentCoins >= food.coinCost)
+        if (UserDataStore.TrySpendCoins(food.coinCost))
         {
-            // Deduct coins
-            PlayerPrefs.SetInt("UserCoins", currentCoins - food.coinCost);
-            PlayerPrefs.Save();
-            
             UnlockFood(food);
             return true;
         }
