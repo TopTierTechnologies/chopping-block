@@ -28,6 +28,7 @@ public class TrophyCaseManager : MonoBehaviour
     {
         UpdateCoinsDisplay();
         ShowAllFoods();
+        AudioManager.Instance?.PlayMusic(AudioManager.Instance.menuMusic);
     }
     
     public void ShowAllFoods()

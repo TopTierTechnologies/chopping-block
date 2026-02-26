@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!29 &1
 OcclusionCullingSettings:
@@ -1338,6 +1338,7 @@ MonoBehaviour:
   foodGridPanel: {fileID: 971715970}
   foodItemCardPrefab: {fileID: 4220740762685148584, guid: 289f2f762af744d4f8cba2eb4402dddc, type: 3}
   foodDetailsPopup: {fileID: 755493490}
+  notEnoughCoinsText: {fileID: 0}
   detailsFoodIcon: {fileID: 704604958}
   detailsFoodName: {fileID: 516874485}
   funFactText: {fileID: 1386855354}

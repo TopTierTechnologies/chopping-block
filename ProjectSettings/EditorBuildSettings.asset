@@ -35,6 +35,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TrophyCase.unity
     guid: ab4d2e527331f9949b2f59a6c21d1872
+  - enabled: 1
+    path: Assets/Scenes/Account.unity
+    guid: 86238511b2d109345b4246b194ebd46f
+  - enabled: 1
+    path: Assets/Scenes/BackgroundSelect.unity
+    guid: 07b4acf39e3eca844ad4dd7dcb21daac
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

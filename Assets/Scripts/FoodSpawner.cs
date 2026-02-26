@@ -5,10 +5,15 @@ using System.Collections.Generic;
 public class FoodSpawner : MonoBehaviour
 {
     [Header("Spawn Settings")]
-    [SerializeField] private GameObject foodItemPrefab; // Generic prefab with FoodItem script
-    [SerializeField] private float spawnInterval = 1f;
+    [SerializeField] private GameObject foodItemPrefab;
+    [SerializeField] private float baseSpawnInterval = 1.5f;
+    [SerializeField] private float minSpawnInterval = 0.3f; // Fastest it can get
     [SerializeField] private float spawnRangeX = 3f;
     [SerializeField] private float spawnY = -15f;
+    
+    [Header("Difficulty Progression")]
+    [SerializeField] private int scorePerDifficultyIncrease = 50; // Speeds up every 50 points
+    [SerializeField] private float intervalDecreaseAmount = 0.05f; // Reduces interval by this much
     
     [Header("Physics Settings")]
     [SerializeField] private float minForce = 8f;
@@ -16,12 +21,21 @@ public class FoodSpawner : MonoBehaviour
     [SerializeField] private float torqueAmount = 5f;
 
     private bool isSpawning = false;
+    private float currentSpawnInterval;
+    private int lastDifficultyScore = 0;
+
+    void Start()
+    {
+        currentSpawnInterval = baseSpawnInterval;
+    }
 
     public void StartSpawning()
     {
         if (!isSpawning)
         {
             isSpawning = true;
+            currentSpawnInterval = baseSpawnInterval;
+            lastDifficultyScore = 0;
             StartCoroutine(SpawnRoutine());
         }
     }
@@ -32,12 +46,30 @@ public class FoodSpawner : MonoBehaviour
         StopAllCoroutines();
     }
 
+    public void UpdateDifficulty(int currentScore)
+    {
+        // Check if we've crossed a difficulty threshold
+        int difficultyLevel = currentScore / scorePerDifficultyIncrease;
+        int lastDifficultyLevel = lastDifficultyScore / scorePerDifficultyIncrease;
+        
+        if (difficultyLevel > lastDifficultyLevel)
+        {
+            // Increase difficulty
+            currentSpawnInterval -= intervalDecreaseAmount;
+            currentSpawnInterval = Mathf.Max(currentSpawnInterval, minSpawnInterval);
+            
+            lastDifficultyScore = currentScore;
+            
+            Debug.Log($"Difficulty increased! New spawn interval: {currentSpawnInterval:F2}s");
+        }
+    }
+
     IEnumerator SpawnRoutine()
     {
         while (isSpawning)
         {
             SpawnFood();
-            yield return new WaitForSeconds(spawnInterval);
+            yield return new WaitForSeconds(currentSpawnInterval);
         }
     }
 
@@ -79,5 +111,11 @@ public class FoodSpawner : MonoBehaviour
             // Add rotation
             rb.AddTorque(Random.Range(-torqueAmount, torqueAmount));
         }
+    }
+    
+    // Get current spawn rate for UI display (optional)
+    public float GetCurrentSpawnInterval()
+    {
+        return currentSpawnInterval;
     }
 }
